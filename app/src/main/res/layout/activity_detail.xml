@@ -79,7 +79,7 @@
 
                 android:visibility="invisible">
 
-                <fragment
+                <!-- fragment
                     android:id="@+id/map"
 
                     android:layout_width="match_parent"
@@ -91,7 +91,7 @@
                     map:uiScrollGestures="false"
                     map:uiTiltGestures="false"
                     map:uiZoomControls="false"
-                    map:uiZoomGestures="false" />
+                    map:uiZoomGestures="false" /-->
 
             </FrameLayout>
 

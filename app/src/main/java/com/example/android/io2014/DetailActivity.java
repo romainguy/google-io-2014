@@ -39,11 +39,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.android.io2014.ui.AnimatedPathView;
 import com.example.android.io2014.ui.TransitionAdapter;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+//import com.google.android.gms.maps.CameraUpdateFactory;
+//import com.google.android.gms.maps.GoogleMap;
+//import com.google.android.gms.maps.MapFragment;
+//import com.google.android.gms.maps.model.LatLng;
+//import com.google.android.gms.maps.model.MarkerOptions;
 
 public class DetailActivity extends Activity {
     @Override
@@ -103,7 +103,7 @@ public class DetailActivity extends Activity {
         descriptionView.setText(getIntent().getStringExtra("description"));
     }
 
-    private void setupMap() {
+    private void setupMap() {/*
         GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 
         double lat = getIntent().getDoubleExtra("lat", 37.6329946);
@@ -112,7 +112,7 @@ public class DetailActivity extends Activity {
 
         LatLng position = new LatLng(lat, lng);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, zoom));
-        map.addMarker(new MarkerOptions().position(position));
+        map.addMarker(new MarkerOptions().position(position));*/
     }
 
     private void setOutlines(int star, int info) {
