@@ -37,6 +37,7 @@ import android.view.ViewAnimationUtils;
 import android.view.WindowInsets;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.view.ViewOutlineProvider;
 import com.example.android.io2014.ui.AnimatedPathView;
 import com.example.android.io2014.ui.TransitionAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -116,13 +117,17 @@ public class DetailActivity extends Activity {
     }
 
     private void setOutlines(int star, int info) {
-        int size = getResources().getDimensionPixelSize(R.dimen.floating_button_size);
+        final int size = getResources().getDimensionPixelSize(R.dimen.floating_button_size);
 
-        Outline outline = new Outline();
-        outline.setOval(0, 0, size, size);
+        final ViewOutlineProvider vop = new ViewOutlineProvider() {
+            @Override
+            public void getOutline(final View view, final Outline outline) {
+                outline.setOval(0, 0, size, size);
+            }
+        };
 
-        findViewById(star).setOutline(outline);
-        findViewById(info).setOutline(outline);
+        findViewById(star).setOutlineProvider(vop);
+        findViewById(info).setOutlineProvider(vop);
     }
 
     private void applySystemWindowsBottomInset(int container) {
@@ -223,7 +228,7 @@ public class DetailActivity extends Activity {
             infoContainer.setVisibility(View.VISIBLE);
             ViewAnimationUtils.createCircularReveal(infoContainer, cx, cy, 0, radius).start();
         } else {
-            ValueAnimator reveal = ViewAnimationUtils.createCircularReveal(
+            Animator reveal = ViewAnimationUtils.createCircularReveal(
                     infoContainer, cx, cy, radius, 0);
             reveal.addListener(new AnimatorListenerAdapter() {
                 @Override

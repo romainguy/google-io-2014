@@ -22,7 +22,7 @@
             <ImageView
                 style="@style/CardPhoto"
                 android:id="@+id/photo"
-                android:viewName="photo1"
+                android:transitionName="photo1"
                 android:src="@drawable/photo1" />
 
             <TextView
@@ -38,7 +38,7 @@
             <ImageView
                 style="@style/CardPhoto"
                 android:id="@id/photo"
-                android:viewName="photo2"
+                android:transitionName="photo2"
                 android:src="@drawable/photo2" />
 
             <TextView
@@ -54,7 +54,7 @@
             <ImageView
                 style="@style/CardPhoto"
                 android:id="@id/photo"
-                android:viewName="photo3"
+                android:transitionName="photo3"
                 android:src="@drawable/photo3" />
 
             <TextView
@@ -70,7 +70,7 @@
             <ImageView
                 style="@style/CardPhoto"
                 android:id="@id/photo"
-                android:viewName="photo4"
+                android:transitionName="photo4"
                 android:src="@drawable/photo4" />
 
             <TextView
