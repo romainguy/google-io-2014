@@ -20,6 +20,8 @@ import android.content.Context;
 import android.graphics.Outline;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
+import android.view.View;
+import android.view.ViewOutlineProvider;
 
 import com.example.android.io2014.R;
 
@@ -38,11 +40,19 @@ public class CardFrameLayout extends FrameLayout {
         super.onSizeChanged(w, h, oldw, oldh);
 
         final float radius = getResources().getDimensionPixelSize(R.dimen.card_corner_radius);
+        final int vw = w;
+        final int vh = h;
 
-        Outline outline = new Outline();
-        outline.setRoundRect(0, 0, w, h, radius);
+        final ViewOutlineProvider vop = new ViewOutlineProvider() {
+            @Override
+            public void getOutline(View view, Outline outline) {
+                outline.setRoundRect(0, 0, vw, vh, radius);
+            }
+        };
 
-        setOutline(outline);
+        setOutlineProvider(vop);
         setClipToOutline(true);
     }
+
+
 }

@@ -25,7 +25,7 @@
 
             <ImageView
                 android:id="@+id/photo"
-                android:viewName="photo_hero"
+                android:transitionName="photo_hero"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
