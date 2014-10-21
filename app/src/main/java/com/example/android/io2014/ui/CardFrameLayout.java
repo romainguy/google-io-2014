@@ -36,15 +36,17 @@ public class CardFrameLayout extends FrameLayout {
     }
 
     @Override
-    protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
         final float radius = getResources().getDimensionPixelSize(R.dimen.card_corner_radius);
+        final int vw = w;
+        final int vh = h;
 
         final ViewOutlineProvider vop = new ViewOutlineProvider() {
             @Override
-            public void getOutline(final View view, final Outline outline) {
-                outline.setRoundRect(0, 0, w, h, radius);
+            public void getOutline(View view, Outline outline) {
+                outline.setRoundRect(0, 0, vw, vh, radius);
             }
         };
 

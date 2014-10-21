@@ -121,7 +121,7 @@ public class DetailActivity extends Activity {
 
         final ViewOutlineProvider vop = new ViewOutlineProvider() {
             @Override
-            public void getOutline(final View view, final Outline outline) {
+            public void getOutline(View view, Outline outline) {
                 outline.setOval(0, 0, size, size);
             }
         };
