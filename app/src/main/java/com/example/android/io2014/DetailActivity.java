@@ -19,7 +19,6 @@ package com.example.android.io2014;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -34,10 +33,13 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.ViewOutlineProvider;
 import android.view.WindowInsets;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.view.ViewOutlineProvider;
+
 import com.example.android.io2014.ui.AnimatedPathView;
 import com.example.android.io2014.ui.TransitionAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -66,8 +68,8 @@ public class DetailActivity extends Activity {
             @Override
             public void onTransitionEnd(Transition transition) {
                 ImageView hero = (ImageView) findViewById(R.id.photo);
-                ObjectAnimator color = ObjectAnimator.ofArgb(hero.getColorFilter(), "color", 0);
-                color.addUpdateListener(new ColorFilterListener(hero));
+                ObjectAnimator color = ObjectAnimator.ofArgb(hero.getDrawable(), "tint",
+                        getResources().getColor(R.color.photo_tint), 0);
                 color.start();
 
                 findViewById(R.id.info).animate().alpha(1.0f);
@@ -81,9 +83,8 @@ public class DetailActivity extends Activity {
     @Override
     public void onBackPressed() {
         ImageView hero = (ImageView) findViewById(R.id.photo);
-        ObjectAnimator color = ObjectAnimator.ofArgb(hero.getColorFilter(), "color",
-                getResources().getColor(R.color.photo_tint));
-        color.addUpdateListener(new ColorFilterListener(hero));
+        ObjectAnimator color = ObjectAnimator.ofArgb(hero.getDrawable(), "tint",
+                0, getResources().getColor(R.color.photo_tint));
         color.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -224,11 +225,14 @@ public class DetailActivity extends Activity {
         int cy = (view.getTop() + view.getBottom()) / 2;
         float radius = Math.max(infoContainer.getWidth(), infoContainer.getHeight()) * 2.0f;
 
+        Animator reveal;
         if (infoContainer.getVisibility() == View.INVISIBLE) {
             infoContainer.setVisibility(View.VISIBLE);
-            ViewAnimationUtils.createCircularReveal(infoContainer, cx, cy, 0, radius).start();
+            reveal = ViewAnimationUtils.createCircularReveal(
+                    infoContainer, cx, cy, 0, radius);
+            reveal.setInterpolator(new AccelerateInterpolator(2.0f));
         } else {
-            Animator reveal = ViewAnimationUtils.createCircularReveal(
+            reveal = ViewAnimationUtils.createCircularReveal(
                     infoContainer, cx, cy, radius, 0);
             reveal.addListener(new AnimatorListenerAdapter() {
                 @Override
@@ -236,26 +240,15 @@ public class DetailActivity extends Activity {
                     infoContainer.setVisibility(View.INVISIBLE);
                 }
             });
-            reveal.start();
+            reveal.setInterpolator(new DecelerateInterpolator(2.0f));
         }
+        reveal.setDuration(600);
+        reveal.start();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.detail, menu);
         return true;
-    }
-
-    private static class ColorFilterListener implements ValueAnimator.AnimatorUpdateListener {
-        private final ImageView mHero;
-
-        ColorFilterListener(ImageView hero) {
-            mHero = hero;
-        }
-
-        @Override
-        public void onAnimationUpdate(ValueAnimator valueAnimator) {
-            mHero.getDrawable().setColorFilter(mHero.getColorFilter());
-        }
     }
 }

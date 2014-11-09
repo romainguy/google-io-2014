@@ -31,15 +31,17 @@
                 android:layout_height="wrap_content"
 
                 android:tint="@color/photo_tint"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+
+                android:contentDescription="@string/photo_description" />
 
             <ImageButton
                 android:id="@+id/info"
                 android:layout_width="@dimen/floating_button_size"
                 android:layout_height="@dimen/floating_button_size"
 
-                android:layout_gravity="bottom|right"
-                android:layout_marginRight="16dp"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
 
                 android:alpha="0.0"
@@ -50,15 +52,17 @@
                 android:elevation="@dimen/button_elevation"
                 android:stateListAnimator="@anim/button_raise"
 
-                android:onClick="showInformation" />
+                android:onClick="showInformation"
+
+                android:contentDescription="@string/info_button_description" />
 
             <ImageButton
                 android:id="@+id/star"
                 android:layout_width="@dimen/floating_button_size"
                 android:layout_height="@dimen/floating_button_size"
 
-                android:layout_gravity="bottom|left"
-                android:layout_marginLeft="16dp"
+                android:layout_gravity="bottom|start"
+                android:layout_marginStart="16dp"
                 android:layout_marginBottom="16dp"
 
                 android:alpha="0.0"
@@ -69,7 +73,9 @@
                 android:elevation="4dp"
                 android:stateListAnimator="@anim/button_raise"
 
-                android:onClick="showStar" />
+                android:onClick="showStar"
+
+                android:contentDescription="@string/star_button_description" />
 
             <FrameLayout
                 android:id="@+id/information_container"
@@ -87,6 +93,7 @@
 
                     android:name="com.google.android.gms.maps.MapFragment"
 
+                    tools:ignore="MissingPrefix"
                     map:uiRotateGestures="false"
                     map:uiScrollGestures="false"
                     map:uiTiltGestures="false"
