@@ -21,7 +21,7 @@ The complete video of the Google I/O 2014 talk detailing how this application wo
 How to use this source code
 ===========================
 
-The google-io-2014 project can be opened in Android Studio 0.8.9 or later. It contains a single module
+The google-io-2014 project can be opened in Android Studio 0.8.14 or later. It contains a single module
 called **app** in the `app/` folder.
 
 The project can be compiled from the command line using Gradle.
