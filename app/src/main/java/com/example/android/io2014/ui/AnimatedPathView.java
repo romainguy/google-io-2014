@@ -20,12 +20,12 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.DashPathEffect;
 import android.graphics.Paint;
-import android.graphics.PathEffect;
+import android.graphics.Path;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+
 import com.example.android.io2014.R;
 
 import java.util.ArrayList;
@@ -44,6 +44,7 @@ public class AnimatedPathView extends View {
     private final Object mSvgLock = new Object();
     private List<SvgHelper.SvgPath> mPaths = new ArrayList<SvgHelper.SvgPath>(0);
     private Thread mLoader;
+    private final Path mRenderPath = new Path();
 
     private float mPhase;
     private float mFillAlpha;
@@ -129,7 +130,7 @@ public class AnimatedPathView extends View {
     }
 
     public void reveal() {
-        ObjectAnimator svgAnimator = ObjectAnimator.ofFloat(this, "phase", 1.0f, 0.0f);
+        ObjectAnimator svgAnimator = ObjectAnimator.ofFloat(this, "phase", 0.0f, 1.0f);
         svgAnimator.setDuration(mDuration);
         svgAnimator.start();
 
@@ -143,7 +144,8 @@ public class AnimatedPathView extends View {
 
     private void updatePathsPhaseLocked() {
         for (SvgHelper.SvgPath path : mPaths) {
-            path.paint.setPathEffect(createPathEffect(path.length, mPhase, 0.0f));
+            path.renderPath.reset();
+            path.measure.getSegment(0.0f, mPhase * path.length, path.renderPath, true);
         }
     }
 
@@ -183,18 +185,13 @@ public class AnimatedPathView extends View {
             canvas.translate(getPaddingLeft(), getPaddingTop());
             mFillPaint.setAlpha((int) (mFillAlpha * 255.0f));
             for (SvgHelper.SvgPath path : mPaths) {
-                int alpha = (int) (Math.min((1.0f - mPhase) * mFadeFactor, 1.0f) * 255.0f);
-
+                int alpha = (int) (Math.min(mPhase * mFadeFactor, 1.0f) * 255.0f);
                 path.paint.setAlpha(alpha);
+
                 canvas.drawPath(path.path, mFillPaint);
-                canvas.drawPath(path.path, path.paint);
+                canvas.drawPath(path.renderPath, path.paint);
             }
             canvas.restore();
         }
-    }
-
-    private static PathEffect createPathEffect(float pathLength, float phase, float offset) {
-        return new DashPathEffect(new float[] { pathLength, pathLength },
-                Math.max(phase * pathLength, offset));
     }
 }
